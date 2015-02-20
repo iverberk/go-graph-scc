@@ -8,6 +8,7 @@ import (
 	"sort"
 	"strconv"
 	"strings"
+	"time"
 )
 
 var sccSize int
@@ -110,6 +111,8 @@ func main() {
 	log.Println("Loading graphs...")
 	loadGraph("SCC.txt", &g, &ginv)
 
+	timeStart := time.Now()
+
 	log.Println("First pass...")
 	depthFirstSearchLoop(&ginv)
 
@@ -119,5 +122,7 @@ func main() {
 	log.Println("Sorting strongly connected component sizes...")
 	sort.Sort(sort.Reverse(sort.IntSlice(g.sccs)))
 
-	fmt.Printf("SCCS: %v", g.sccs[:5])
+	timeEnd := time.Now()
+
+	fmt.Printf("Time: %s, SCCS: %v\n", timeEnd.Sub(timeStart).String(), g.sccs[:5])
 }
